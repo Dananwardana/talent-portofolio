@@ -38,7 +38,7 @@ function ComparePage() {
     setIds([...selectedIds, id]);
     setPickerOpen(false);
   };
-  const removeCandidate = (id: string) => setIds(selectedIds.filter((x) => x !== id));
+  const removeCandidate = (id: string) => setIds(selectedIds.filter((x: string) => x !== id));
 
   const canCompare = selected.length === 2;
 
