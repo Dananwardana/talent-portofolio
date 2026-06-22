@@ -116,7 +116,7 @@ function ComparePage() {
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {c.tags.map((t) => (
+                  {c.tags.map((t: string) => (
                     <span key={t} className="px-2.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs border border-maroon/30">
                       {t}
                     </span>
