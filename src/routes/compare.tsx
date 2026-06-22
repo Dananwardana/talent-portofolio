@@ -18,12 +18,12 @@ function ComparePage() {
   const navigate = useNavigate({ from: "/compare" });
   const [pickerOpen, setPickerOpen] = useState(false);
 
-  const selectedIds = useMemo(
+  const selectedIds: string[] = useMemo(
     () => (ids ? ids.split(",").filter(Boolean) : []),
     [ids],
   );
   const selected = selectedIds
-    .map((id) => CANDIDATES.find((c) => c.id === id))
+    .map((id: string) => CANDIDATES.find((c) => c.id === id))
     .filter((c): c is (typeof CANDIDATES)[number] => Boolean(c));
 
   const setIds = (next: string[]) => {
