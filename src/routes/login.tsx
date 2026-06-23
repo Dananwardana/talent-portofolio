@@ -17,9 +17,21 @@ function LoginPage() {
         </div>
 
         <div className="grid lg:grid-cols-[1.4fr_1fr] gap-10 items-start max-w-5xl mx-auto">
+          <div className="red-string hidden lg:block"
+            style={{
+              top: "180px",
+              left: "50%",
+              width: "500px",
+              transform: "rotate(18deg)",
+            }}
+          />
           <PaperFrame withPin className="rotate-[-0.6deg]">
-            <h1 className="font-typewriter text-4xl text-center text-maroon tracking-widest">LOGIN</h1>
-            <p className="mt-2 mb-8 text-center font-typewriter text-pin text-sm">Join our community of professionals</p>
+            <h1 className="font-typewriter text-4xl text-center text-maroon tracking-widest">
+              LOGIN
+            </h1>
+            <p className="mt-2 mb-8 text-center font-typewriter text-pin text-sm">
+              Join our community of professionals
+            </p>
 
             <form className="space-y-5 max-w-md mx-auto">
               <VintageField label="Email" type="email" placeholder="Enter your email" />
@@ -30,14 +42,20 @@ function LoginPage() {
                   <input type="checkbox" className="accent-[var(--maroon)]" />
                   Remember me
                 </label>
-                <a href="#" className="text-pin">Forgot Password?</a>
+                <a href="#" className="text-pin">
+                  Forgot Password?
+                </a>
               </div>
 
               <div className="pt-4 flex flex-col items-center gap-4">
-                <Link to="/home" className="pill-btn !px-10 !py-3">LOGIN</Link>
+                <Link to="/home" className="pill-btn !px-10 !py-3">
+                  LOGIN
+                </Link>
                 <p className="font-typewriter text-sm text-ink">
                   Don't have an account?{" "}
-                  <Link to="/register" className="text-pin underline">Register</Link>
+                  <Link to="/register" className="text-pin underline">
+                    Register
+                  </Link>
                 </p>
               </div>
             </form>

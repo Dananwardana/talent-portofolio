@@ -8,12 +8,48 @@ export const Route = createFileRoute("/home")({
 });
 
 const candidates = [
-  { id: "1", name: "ALDIFA ZAHROTUL AUFAR", role: "Frontend Developer", tags: ["open to work", "react"], img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200" },
-  { id: "2", name: "DANAN EMWE", role: "UI/UX Designer", tags: ["open to work", "figma"], img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200" },
-  { id: "3", name: "DODIK RIMA", role: "Backend Engineer", tags: ["open to work", "node.js"], img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200" },
-  { id: "4", name: "ARIMANYU RZ", role: "Full Stack Dev", tags: ["open to work", "react"], img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200" },
-  { id: "5", name: "SARAH KIM", role: "Data Scientist", tags: ["fresh grad", "python"], img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200" },
-  { id: "6", name: "MARCO TANI", role: "Mobile Developer", tags: ["intern", "flutter"], img: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=200" },
+  {
+    id: "1",
+    name: "ALDIFA ZAHROTUL AUFAR",
+    role: "Frontend Developer",
+    tags: ["open to work", "react"],
+    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
+  },
+  {
+    id: "2",
+    name: "DANAN EMWE",
+    role: "UI/UX Designer",
+    tags: ["open to work", "figma"],
+    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
+  },
+  {
+    id: "3",
+    name: "DODIK RIMA",
+    role: "Backend Engineer",
+    tags: ["open to work", "node.js"],
+    img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200",
+  },
+  {
+    id: "4",
+    name: "ARIMANYU RZ",
+    role: "Full Stack Dev",
+    tags: ["open to work", "react"],
+    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
+  },
+  {
+    id: "5",
+    name: "SARAH KIM",
+    role: "Data Scientist",
+    tags: ["fresh grad", "python"],
+    img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200",
+  },
+  {
+    id: "6",
+    name: "MARCO TANI",
+    role: "Mobile Developer",
+    tags: ["intern", "flutter"],
+    img: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=200",
+  },
 ];
 
 function HomePage() {
@@ -41,13 +77,22 @@ function HomePage() {
         <div className="mt-4 bg-maroon/80 backdrop-blur rounded-xl px-5 py-3 flex flex-wrap gap-4 items-center text-paper font-typewriter text-sm">
           <span className="tracking-widest">FILTER BY:</span>
           <select className="bg-paper text-ink rounded-md px-3 py-1.5 border border-paper/40">
-            <option>Relevance</option><option>Newest</option><option>Most Viewed</option>
+            <option>Relevance</option>
+            <option>Newest</option>
+            <option>Most Viewed</option>
           </select>
           <select className="bg-paper text-ink rounded-md px-3 py-1.5 border border-paper/40">
-            <option>Experience</option><option>0-2 yrs</option><option>3-5 yrs</option><option>5+ yrs</option>
+            <option>Experience</option>
+            <option>0-2 yrs</option>
+            <option>3-5 yrs</option>
+            <option>5+ yrs</option>
           </select>
-          <label className="flex items-center gap-2"><input type="checkbox" className="accent-pin" /> Fresh Grad</label>
-          <label className="flex items-center gap-2"><input type="checkbox" className="accent-pin" /> Intern</label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" className="accent-pin" /> Fresh Grad
+          </label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" className="accent-pin" /> Intern
+          </label>
         </div>
 
         {/* Grid */}
@@ -64,11 +109,16 @@ function HomePage() {
                   className="h-24 w-24 rounded-md object-cover border-2 border-maroon/40"
                 />
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-typewriter text-maroon font-bold truncate tracking-wide">{c.name}</h3>
+                  <h3 className="font-typewriter text-maroon font-bold truncate tracking-wide">
+                    {c.name}
+                  </h3>
                   <p className="font-typewriter text-ink/70 text-sm mt-1">{c.role}</p>
                   <div className="mt-3 flex flex-wrap gap-1.5">
                     {c.tags.map((t) => (
-                      <span key={t} className="px-2.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs font-medium border border-maroon/30">
+                      <span
+                        key={t}
+                        className="px-2.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs font-medium border border-maroon/30"
+                      >
                         {t}
                       </span>
                     ))}
@@ -76,11 +126,7 @@ function HomePage() {
                 </div>
               </div>
               <div className="mt-4 flex gap-2">
-                <Link
-                  to="/candidate/$id"
-                  params={{ id: c.id }}
-                  className="pill-btn flex-1 !py-2"
-                >
+                <Link to="/candidate/$id" params={{ id: c.id }} className="pill-btn flex-1 !py-2">
                   View Profile
                 </Link>
                 <Link

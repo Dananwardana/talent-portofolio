@@ -18,10 +18,7 @@ function ComparePage() {
   const navigate = useNavigate({ from: "/compare" });
   const [pickerOpen, setPickerOpen] = useState(false);
 
-  const selectedIds: string[] = useMemo(
-    () => (ids ? ids.split(",").filter(Boolean) : []),
-    [ids],
-  );
+  const selectedIds: string[] = useMemo(() => (ids ? ids.split(",").filter(Boolean) : []), [ids]);
   const selected = selectedIds
     .map((id: string) => CANDIDATES.find((c) => c.id === id))
     .filter((c): c is (typeof CANDIDATES)[number] => Boolean(c));
@@ -45,13 +42,17 @@ function ComparePage() {
   return (
     <div className="relative min-h-screen">
       <div className="pt-6 px-6 sm:px-10 flex items-center justify-between">
-        <Link to="/home" className="pill-btn">&lt; Back</Link>
+        <Link to="/home" className="pill-btn">
+          &lt; Back
+        </Link>
       </div>
 
       <main className="px-6 sm:px-10 max-w-5xl mx-auto pb-16">
         <div className="mt-6 text-center">
           <div className="inline-block bg-maroon-deep/70 border border-paper/10 rounded-lg px-8 py-3">
-            <h1 className="font-typewriter text-paper text-2xl tracking-widest">Compare Profiles</h1>
+            <h1 className="font-typewriter text-paper text-2xl tracking-widest">
+              Compare Profiles
+            </h1>
           </div>
           <p className="mt-3 font-typewriter text-paper/80 text-sm">
             {canCompare
@@ -110,14 +111,19 @@ function ComparePage() {
                     className="h-20 w-20 rounded-md object-cover border-2 border-maroon/40"
                   />
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-typewriter text-maroon font-bold tracking-wide">{c.name}</h3>
+                    <h3 className="font-typewriter text-maroon font-bold tracking-wide">
+                      {c.name}
+                    </h3>
                     <p className="font-typewriter text-ink/70 text-sm">{c.role}</p>
                     <p className="font-typewriter text-ink/60 text-xs mt-1">{c.location}</p>
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {c.tags.map((t: string) => (
-                    <span key={t} className="px-2.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs border border-maroon/30">
+                    <span
+                      key={t}
+                      className="px-2.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs border border-maroon/30"
+                    >
                       {t}
                     </span>
                   ))}
@@ -133,17 +139,29 @@ function ComparePage() {
             <table className="w-full bg-paper">
               <thead>
                 <tr className="bg-paper-dark">
-                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest">Category</th>
-                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest">{selected[0].name}</th>
-                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest">{selected[1].name}</th>
+                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest">
+                    Category
+                  </th>
+                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest">
+                    {selected[0].name}
+                  </th>
+                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest">
+                    {selected[1].name}
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {COMPARE_ROWS.map((row, idx) => (
                   <tr key={row.key} className={idx % 2 === 0 ? "bg-paper" : "bg-paper-dark/40"}>
-                    <td className="px-6 py-5 font-typewriter text-maroon font-bold align-top">{row.label}</td>
-                    <td className="px-6 py-5 font-sans text-ink text-sm align-top">{selected[0][row.key]}</td>
-                    <td className="px-6 py-5 font-sans text-ink text-sm align-top">{selected[1][row.key]}</td>
+                    <td className="px-6 py-5 font-typewriter text-maroon font-bold align-top">
+                      {row.label}
+                    </td>
+                    <td className="px-6 py-5 font-sans text-ink text-sm align-top">
+                      {selected[0][row.key]}
+                    </td>
+                    <td className="px-6 py-5 font-sans text-ink text-sm align-top">
+                      {selected[1][row.key]}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -167,8 +185,13 @@ function ComparePage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-typewriter text-2xl text-maroon tracking-widest">Pick a Candidate</h2>
-              <button onClick={() => setPickerOpen(false)} className="text-maroon hover:text-maroon-deep">
+              <h2 className="font-typewriter text-2xl text-maroon tracking-widest">
+                Pick a Candidate
+              </h2>
+              <button
+                onClick={() => setPickerOpen(false)}
+                className="text-maroon hover:text-maroon-deep"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -182,10 +205,16 @@ function ComparePage() {
                     onClick={() => addCandidate(c.id)}
                     className="w-full flex items-center gap-4 p-3 rounded-lg border-2 border-maroon/30 hover:border-maroon hover:bg-maroon/5 transition disabled:opacity-50 disabled:cursor-not-allowed text-left"
                   >
-                    <img src={c.img} alt={c.name} className="h-12 w-12 rounded-md object-cover border border-maroon/30" />
+                    <img
+                      src={c.img}
+                      alt={c.name}
+                      className="h-12 w-12 rounded-md object-cover border border-maroon/30"
+                    />
                     <div className="flex-1 min-w-0">
                       <p className="font-typewriter text-maroon font-bold truncate">{c.name}</p>
-                      <p className="font-sans text-ink/70 text-sm">{c.role} · {c.location}</p>
+                      <p className="font-sans text-ink/70 text-sm">
+                        {c.role} · {c.location}
+                      </p>
                     </div>
                     {already && <Check className="h-5 w-5 text-maroon" />}
                   </button>

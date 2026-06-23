@@ -8,7 +8,15 @@ export const Route = createFileRoute("/complete-profile")({
   component: CompleteProfile,
 });
 
-const STEPS = ["Account", "Skill", "Experience", "Education", "Project", "Certification", "Activity"];
+const STEPS = [
+  "Account",
+  "Skill",
+  "Experience",
+  "Education",
+  "Project",
+  "Certification",
+  "Activity",
+];
 
 function CompleteProfile() {
   const [step, setStep] = useState(1); // 0-indexed visually; start on Skill like screenshot
@@ -16,12 +24,16 @@ function CompleteProfile() {
     <div className="relative min-h-screen overflow-hidden">
       {/* Back & Title */}
       <div className="pt-6 px-6 sm:px-10 flex items-center justify-between">
-        <Link to="/register" className="pill-btn">&lt; Back</Link>
+        <Link to="/register" className="pill-btn">
+          &lt; Back
+        </Link>
       </div>
 
       <div className="px-6 sm:px-10 mt-6">
         <div className="inline-block bg-maroon-deep/70 border border-paper/10 rounded-lg px-6 py-3">
-          <h1 className="font-typewriter text-paper text-2xl tracking-widest">COMPLETE YOUR PROFILE</h1>
+          <h1 className="font-typewriter text-paper text-2xl tracking-widest">
+            COMPLETE YOUR PROFILE
+          </h1>
         </div>
 
         {/* Stepper */}
@@ -40,8 +52,8 @@ function CompleteProfile() {
                     active
                       ? "bg-paper text-maroon border-paper scale-110 shadow-lg"
                       : done
-                      ? "bg-paper/30 text-paper border-paper/40"
-                      : "bg-transparent text-paper border-paper/40"
+                        ? "bg-paper/30 text-paper border-paper/40"
+                        : "bg-transparent text-paper border-paper/40"
                   }`}
                 >
                   {done ? <ChevronDown className="h-4 w-4" /> : i + 1}
@@ -71,9 +83,13 @@ function CompleteProfile() {
               Previous
             </button>
             {step < STEPS.length - 1 ? (
-              <button onClick={() => setStep((s) => s + 1)} className="pill-btn">Next</button>
+              <button onClick={() => setStep((s) => s + 1)} className="pill-btn">
+                Next
+              </button>
             ) : (
-              <Link to="/home" className="pill-btn">Finish</Link>
+              <Link to="/home" className="pill-btn">
+                Finish
+              </Link>
             )}
           </div>
         </div>
@@ -95,12 +111,21 @@ function AccountStep() {
 }
 
 function SkillStep() {
-  const [skills, setSkills] = useState(["javascript", "react", "Node.js", "Node.js", "Node.js", "Node.js"]);
+  const [skills, setSkills] = useState([
+    "javascript",
+    "react",
+    "Node.js",
+    "Node.js",
+    "Node.js",
+    "Node.js",
+  ]);
   const [val, setVal] = useState("");
   return (
     <div>
       <h2 className="font-typewriter text-2xl text-maroon tracking-widest">SKILLS</h2>
-      <p className="font-typewriter text-pin text-sm mt-1">Add the Skills and technologies you are proficient in</p>
+      <p className="font-typewriter text-pin text-sm mt-1">
+        Add the Skills and technologies you are proficient in
+      </p>
 
       <div className="mt-6">
         <label className="block font-typewriter text-sm text-maroon mb-1.5">Add Skills</label>
@@ -112,7 +137,12 @@ function SkillStep() {
             className="flex-1 px-4 py-3 rounded-md bg-transparent border-2 border-maroon/70 font-typewriter text-ink outline-none focus:border-maroon"
           />
           <button
-            onClick={() => { if (val.trim()) { setSkills([...skills, val.trim()]); setVal(""); } }}
+            onClick={() => {
+              if (val.trim()) {
+                setSkills([...skills, val.trim()]);
+                setVal("");
+              }
+            }}
             className="pill-btn !rounded-md !px-6"
           >
             Add
@@ -124,9 +154,15 @@ function SkillStep() {
         <p className="font-typewriter text-sm text-maroon mb-2">Your Skills</p>
         <div className="flex flex-wrap gap-2">
           {skills.map((s, i) => (
-            <span key={i} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border-2 border-maroon/60 font-typewriter text-ink text-sm">
+            <span
+              key={i}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border-2 border-maroon/60 font-typewriter text-ink text-sm"
+            >
               {s}
-              <button onClick={() => setSkills(skills.filter((_, j) => j !== i))} className="text-pin hover:text-maroon">
+              <button
+                onClick={() => setSkills(skills.filter((_, j) => j !== i))}
+                className="text-pin hover:text-maroon"
+              >
                 <X className="h-3.5 w-3.5" />
               </button>
             </span>
@@ -143,7 +179,9 @@ function ExperienceStep() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-typewriter text-2xl text-maroon tracking-widest">EXPERIENCE</h2>
-          <p className="font-typewriter text-pin text-sm mt-1">Add your experience and professional background</p>
+          <p className="font-typewriter text-pin text-sm mt-1">
+            Add your experience and professional background
+          </p>
         </div>
         <button className="pill-btn !rounded-md !px-6">Add</button>
       </div>
@@ -154,12 +192,17 @@ function ExperienceStep() {
             <p className="text-sm">datasea solutions</p>
           </div>
           <div className="flex gap-2 text-maroon">
-            <Pencil className="h-4 w-4 cursor-pointer" /><Trash2 className="h-4 w-4 cursor-pointer" />
+            <Pencil className="h-4 w-4 cursor-pointer" />
+            <Trash2 className="h-4 w-4 cursor-pointer" />
           </div>
         </div>
         <div className="mt-3 flex gap-6 text-sm">
-          <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" /> Jan 2025 – present</span>
-          <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> Tanjung, Jakarta</span>
+          <span className="flex items-center gap-1.5">
+            <Calendar className="h-4 w-4" /> Jan 2025 – present
+          </span>
+          <span className="flex items-center gap-1.5">
+            <MapPin className="h-4 w-4" /> Tanjung, Jakarta
+          </span>
         </div>
         <ul className="mt-3 list-disc list-inside text-sm space-y-1">
           <li>Developed and maintained responsive web applications using React</li>
@@ -188,12 +231,17 @@ function EducationStep() {
             <p className="text-sm">Sebelas Maret University</p>
           </div>
           <div className="flex gap-2 text-maroon">
-            <Pencil className="h-4 w-4 cursor-pointer" /><Trash2 className="h-4 w-4 cursor-pointer" />
+            <Pencil className="h-4 w-4 cursor-pointer" />
+            <Trash2 className="h-4 w-4 cursor-pointer" />
           </div>
         </div>
         <div className="mt-3 flex gap-6 text-sm">
-          <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4" /> Jan 2022 – present</span>
-          <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" /> Jebres, Surakarta</span>
+          <span className="flex items-center gap-1.5">
+            <Calendar className="h-4 w-4" /> Jan 2022 – present
+          </span>
+          <span className="flex items-center gap-1.5">
+            <MapPin className="h-4 w-4" /> Jebres, Surakarta
+          </span>
         </div>
         <p className="mt-2 text-sm">GPA: 3.98 / 4</p>
       </div>
@@ -204,8 +252,12 @@ function EducationStep() {
 function PlaceholderStep({ title }: { title: string }) {
   return (
     <div className="text-center py-12">
-      <h2 className="font-typewriter text-2xl text-maroon tracking-widest">{title.toUpperCase()}</h2>
-      <p className="font-typewriter text-pin text-sm mt-2">Add your {title.toLowerCase()} details</p>
+      <h2 className="font-typewriter text-2xl text-maroon tracking-widest">
+        {title.toUpperCase()}
+      </h2>
+      <p className="font-typewriter text-pin text-sm mt-2">
+        Add your {title.toLowerCase()} details
+      </p>
       <button className="mt-6 pill-btn !rounded-md !px-6">+ Add {title}</button>
     </div>
   );

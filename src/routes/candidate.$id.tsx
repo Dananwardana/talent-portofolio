@@ -63,8 +63,18 @@ function CandidateDetail() {
 
             {/* string + pinned notes */}
             <div className="absolute inset-0 pointer-events-none">
-              <svg className="absolute inset-0 h-full w-full" viewBox="0 0 400 600" preserveAspectRatio="none">
-                <path d="M 80 80 L 320 180 L 100 280 L 320 380 L 100 480" stroke="white" strokeWidth="1" fill="none" opacity="0.6" />
+              <svg
+                className="absolute inset-0 h-full w-full"
+                viewBox="0 0 400 600"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M 80 80 L 320 180 L 100 280 L 320 380 L 100 480"
+                  stroke="white"
+                  strokeWidth="1"
+                  fill="none"
+                  opacity="0.6"
+                />
               </svg>
             </div>
 
@@ -118,7 +128,9 @@ function CandidateDetail() {
         </div>
 
         <div className="mt-8 flex justify-center">
-          <Link to="/home" className="pill-btn">← Back to discovery</Link>
+          <Link to="/home" className="pill-btn">
+            ← Back to discovery
+          </Link>
         </div>
       </main>
     </div>
@@ -170,10 +182,14 @@ function SkillsContent() {
         </div>
       </div>
       <div className="bg-white rounded-2xl p-6 shadow-sm">
-        <h3 className="font-typewriter text-center text-maroon tracking-widest mb-6">SOFT SKILLS</h3>
+        <h3 className="font-typewriter text-center text-maroon tracking-widest mb-6">
+          SOFT SKILLS
+        </h3>
         <div className="flex flex-wrap gap-2 font-sans">
           {soft.map((s) => (
-            <span key={s} className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm">{s}</span>
+            <span key={s} className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-sm">
+              {s}
+            </span>
           ))}
         </div>
       </div>

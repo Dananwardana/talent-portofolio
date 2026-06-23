@@ -17,6 +17,14 @@ function Landing() {
         </div>
 
         <div className="grid lg:grid-cols-[1.6fr_1fr] gap-10 items-center max-w-6xl mx-auto">
+          <div className="red-string hidden lg:block"
+            style={{
+              top: "190px",
+              left: "50%",
+              width: "500px",
+              transform: "rotate(18deg)",
+            }}
+          />
           <div className="relative">
             <PaperFrame withPin className="rotate-[-1.2deg]">
               <div className="py-14 text-center">
@@ -30,10 +38,7 @@ function Landing() {
             </PaperFrame>
 
             <div className="mt-10 flex justify-center">
-              <Link
-                to="/home"
-                className="pill-btn !px-8 !py-4 !text-base shadow-2xl"
-              >
+              <Link to="/home" className="pill-btn !px-8 !py-4 !text-base shadow-2xl">
                 Saya Ingin Mencari Kandidat →
               </Link>
             </div>
@@ -41,15 +46,20 @@ function Landing() {
 
           <div className="relative">
             <DoilyNote className="rotate-[2deg]">
-              <div className="mx-auto mb-3 h-12 w-12 rounded-full"
+              <div
+                className="mx-auto mb-3 h-12 w-12 rounded-full"
                 style={{
-                  background: "radial-gradient(circle at 35% 35%, oklch(0.5 0.2 25), oklch(0.2 0.12 22))",
+                  background:
+                    "radial-gradient(circle at 35% 35%, oklch(0.5 0.2 25), oklch(0.2 0.12 22))",
                   boxShadow: "0 4px 8px rgba(0,0,0,0.4), inset -2px -2px 4px rgba(0,0,0,0.3)",
                 }}
               />
-              <h3 className="font-typewriter text-maroon text-xl tracking-widest">RESOURCES PAGE</h3>
+              <h3 className="font-typewriter text-maroon text-xl tracking-widest">
+                RESOURCES PAGE
+              </h3>
               <p className="mt-4 font-typewriter text-ink text-sm leading-relaxed">
-                Explore professional portfolios from technology, business, engineering, finance, education, healthcare, creative industries, and more.
+                Explore professional portfolios from technology, business, engineering, finance,
+                education, healthcare, creative industries, and more.
               </p>
             </DoilyNote>
           </div>

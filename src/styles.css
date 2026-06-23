@@ -81,10 +81,59 @@
     radial-gradient(circle at 80% 70%, oklch(0.88 0.05 75 / 0.3) 0%, transparent 40%),
     radial-gradient(circle at 50% 50%, oklch(0.94 0.03 82) 0%, oklch(0.90 0.04 78) 100%);
 
-  --maroon-texture:
-    radial-gradient(circle at 15% 25%, oklch(0.28 0.12 25 / 0.6) 0%, transparent 50%),
-    radial-gradient(circle at 85% 75%, oklch(0.18 0.08 22 / 0.7) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, oklch(0.24 0.11 24) 0%, oklch(0.18 0.09 22) 100%);
+--maroon-texture:
+  repeating-linear-gradient(
+    17deg,
+    rgba(255,255,255,.025) 0px,
+    rgba(255,255,255,.025) 2px,
+    transparent 2px,
+    transparent 42px
+  ),
+
+  repeating-linear-gradient(
+    -31deg,
+    rgba(0,0,0,.06) 0px,
+    rgba(0,0,0,.06) 3px,
+    transparent 3px,
+    transparent 56px
+  ),
+
+  repeating-linear-gradient(
+    63deg,
+    rgba(255,255,255,.02) 0px,
+    rgba(255,255,255,.02) 1px,
+    transparent 1px,
+    transparent 24px
+  ),
+
+  repeating-linear-gradient(
+    -67deg,
+    rgba(0,0,0,.05) 0px,
+    rgba(0,0,0,.05) 2px,
+    transparent 2px,
+    transparent 48px
+  ),
+
+  radial-gradient(
+    circle at 15% 20%,
+    rgba(255,255,255,.05),
+    transparent 30%
+  ),
+
+  radial-gradient(
+    circle at 80% 75%,
+    rgba(0,0,0,.12),
+    transparent 35%
+  ),
+
+  linear-gradient(
+    135deg,
+    #6a171c 0%,
+    #5a1217 20%,
+    #4a0f13 50%,
+    #63171c 80%,
+    #571317 100%
+  );
 
   --shadow-paper: 0 10px 30px -8px rgba(0, 0, 0, 0.6), 0 4px 12px -4px rgba(0, 0, 0, 0.4);
   --shadow-pin: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -104,11 +153,77 @@
   }
 
   body {
-    background: var(--maroon-texture);
-    background-attachment: fixed;
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
-  }
+  background: var(--maroon-texture);
+  background-attachment: fixed;
+  background-size:
+    220px 220px,
+    280px 280px,
+    160px 160px,
+    240px 240px,
+    auto,
+    auto,
+    cover;
+
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    repeating-linear-gradient(
+      125deg,
+      transparent 0px,
+      transparent 75px,
+      rgba(255,255,255,.035) 77px,
+      rgba(255,255,255,.035) 79px,
+      transparent 81px
+    ),
+
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0px,
+      transparent 95px,
+      rgba(0,0,0,.06) 97px,
+      rgba(0,0,0,.06) 100px,
+      transparent 102px
+    ),
+
+    repeating-linear-gradient(
+      70deg,
+      transparent 0px,
+      transparent 110px,
+      rgba(255,255,255,.02) 112px,
+      rgba(255,255,255,.02) 115px,
+      transparent 118px
+    );
+
+  mix-blend-mode: soft-light;
+  opacity: .9;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(
+      rgba(255,255,255,.05) .7px,
+      transparent .7px
+    );
+
+  background-size: 5px 5px;
+  opacity: .12;
+}
+
 }
 
 @layer components {

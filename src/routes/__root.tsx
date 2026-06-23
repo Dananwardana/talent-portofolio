@@ -78,9 +78,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "TalentZ — Discover Gen Z Talent" },
-      { name: "description", content: "Vintage detective talent discovery platform for Gen Z careers and opportunities." },
+      {
+        name: "description",
+        content: "Vintage detective talent discovery platform for Gen Z careers and opportunities.",
+      },
       { property: "og:title", content: "TalentZ — Discover Gen Z Talent" },
-      { property: "og:description", content: "Vintage detective talent discovery platform for Gen Z careers and opportunities." },
+      {
+        property: "og:description",
+        content: "Vintage detective talent discovery platform for Gen Z careers and opportunities.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

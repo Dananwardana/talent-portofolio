@@ -40,15 +40,21 @@ export function PaperFrame({ children, className, withPin, withCorners = true }:
     <div className={cn("ornate-frame ornate-corners p-8 sm:p-12", className)}>
       {withCorners && (
         <>
-          <span className="corner tl"><CornerOrnament /></span>
-          <span className="corner tr"><CornerOrnament /></span>
-          <span className="corner bl"><CornerOrnament /></span>
-          <span className="corner br"><CornerOrnament /></span>
+          <span className="corner tl">
+            <CornerOrnament />
+          </span>
+          <span className="corner tr">
+            <CornerOrnament />
+          </span>
+          <span className="corner bl">
+            <CornerOrnament />
+          </span>
+          <span className="corner br">
+            <CornerOrnament />
+          </span>
         </>
       )}
-      {withPin && (
-        <span className="red-pin absolute -top-2 right-8 z-10" aria-hidden />
-      )}
+      {withPin && <span className="red-pin absolute -top-2 right-8 z-10" aria-hidden />}
       <div className="relative z-[1]">{children}</div>
     </div>
   );
@@ -56,7 +62,8 @@ export function PaperFrame({ children, className, withPin, withCorners = true }:
 
 export function DoilyNote({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn("relative paper-surface p-6 text-center", className)}
+    <div
+      className={cn("relative paper-surface p-6 text-center", className)}
       style={{
         clipPath:
           "polygon(0% 8%, 4% 4%, 8% 0%, 92% 0%, 96% 4%, 100% 8%, 100% 92%, 96% 96%, 92% 100%, 8% 100%, 4% 96%, 0% 92%)",
@@ -71,7 +78,12 @@ export function DoilyNote({ children, className }: { children: ReactNode; classN
 
 export function PinnedCard({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={cn("relative paper-surface rounded-lg px-5 py-4 shadow-[var(--shadow-paper)]", className)}>
+    <div
+      className={cn(
+        "relative paper-surface rounded-lg px-5 py-4 shadow-[var(--shadow-paper)]",
+        className,
+      )}
+    >
       <span className="red-pin absolute -top-2 left-1/2 -translate-x-1/2" aria-hidden />
       {children}
     </div>

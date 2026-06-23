@@ -9,11 +9,15 @@ export function TopNav({ showBack = false }: { showBack?: boolean }) {
             &lt; Back
           </Link>
         ) : (
-          <Link to="/" className="flex items-center gap-2 font-typewriter text-paper text-lg tracking-wider">
+          <Link
+            to="/"
+            className="flex items-center gap-2 font-typewriter text-paper text-lg tracking-wider"
+          >
             <span
               className="inline-block h-9 w-9 rounded-full"
               style={{
-                background: "radial-gradient(circle at 35% 35%, oklch(0.55 0.22 25), oklch(0.25 0.15 22))",
+                background:
+                  "radial-gradient(circle at 35% 35%, oklch(0.55 0.22 25), oklch(0.25 0.15 22))",
                 boxShadow: "0 4px 10px rgba(0,0,0,0.6), inset -2px -2px 6px rgba(0,0,0,0.4)",
               }}
               aria-hidden
@@ -23,8 +27,12 @@ export function TopNav({ showBack = false }: { showBack?: boolean }) {
         )}
       </div>
       <nav className="flex items-center gap-3">
-        <Link to="/register" className="pill-btn">REGISTER</Link>
-        <Link to="/login" className="pill-btn">LOGIN</Link>
+        <Link to="/register" className="pill-btn">
+          REGISTER
+        </Link>
+        <Link to="/login" className="pill-btn">
+          LOGIN
+        </Link>
       </nav>
     </header>
   );
