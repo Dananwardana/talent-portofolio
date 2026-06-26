@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "module": "NodeNext", 
+    "moduleResolution": "NodeNext", 
+    "moduleDetection": "force",
+    
+    // Backend tidak butuh JSX
+    "jsx": "react-jsx", 
+    
+    "allowJs": true,
+    "types": ["bun"],
+
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["src/**/*"]
+}
