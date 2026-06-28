@@ -1,7 +1,8 @@
 import { DoilyNote, PaperFrame } from "@/components/vintage/PaperFrame";
 import { ProfessionalsBanner, StatusStrip, TopNav } from "@/components/vintage/TopNav";
 import { VintageField } from "@/components/vintage/VintageField";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { supabase } from "@/lib/supabase"; // Import supabase
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
 export const Route = createFileRoute("/login")({
@@ -12,38 +13,37 @@ function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); 
+    setLoading(true);
     
     try {
-      // 1. Ambil data kandidat untuk verifikasi email
-      const res = await fetch("http://localhost:3001/api/candidates");
-      if (res.ok) {
-        const candidates = await res.json();
-        
-        // 2. Cari user berdasarkan email yang dimasukkan
-        const user = candidates.find((c: any) => c.email?.toLowerCase() === email.toLowerCase());
+      // 1. Menggunakan Supabase Auth untuk autentikasi yang valid
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
 
-        if (user) {
-          // 3. Simpan data ID user ke Local Storage agar profil yang ditarik nanti benar
-          localStorage.setItem("talentz_user", JSON.stringify({
-            id: user.id,
-            fullName: user.full_name,
-            email: user.email
-          }));
-          
-          // 4. Redirect ke profil dengan parameter 'me'
-          navigate({ to: "/candidate/$id", params: { id: "me" } });
-        } else {
-          alert("Email tidak ditemukan. Pastikan Anda sudah terdaftar!");
-        }
-      } else {
-        alert("Gagal menghubungi server. Pastikan backend berjalan.");
+      if (error) throw error;
+
+      // 2. Jika sukses, arahkan ke profil (Supabase otomatis menyimpan sesi)
+      if (data.user) {
+        // Tetap simpan ke localStorage untuk kebutuhan UI aplikasi kamu
+        localStorage.setItem("talentz_user", JSON.stringify({
+          id: data.user.id,
+          email: data.user.email
+        }));
+        
+        // 3. Redirect ke profil dengan parameter 'me'
+        navigate({ to: "/candidate/$id", params: { id: "me" } });
       }
-    } catch (err) {
-      console.error("Gagal koneksi ke backend:", err);
-      alert("Pastikan server backend (localhost:3001) sedang berjalan.");
+    } catch (err: any) {
+      console.error("Login Error:", err);
+      alert("Login gagal: " + (err.message || "Email atau password salah"));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,8 +101,8 @@ function LoginPage() {
                 </div>
 
                 <div className="pt-4 flex flex-col items-center gap-4">
-                  <button type="submit" className="pill-btn !px-10 !py-3 w-full">
-                    LOGIN
+                  <button type="submit" disabled={loading} className="pill-btn !px-10 !py-3 w-full">
+                    {loading ? "AUTHENTICATING..." : "LOGIN"}
                   </button>
                   <p className="font-typewriter text-sm text-ink">
                     Don't have an account?{" "}
