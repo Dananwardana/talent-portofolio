@@ -1,7 +1,8 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { PaperFrame, DoilyNote } from "@/components/vintage/PaperFrame";
-import { TopNav, StatusStrip, ProfessionalsBanner } from "@/components/vintage/TopNav";
+import { DoilyNote, PaperFrame } from "@/components/vintage/PaperFrame";
+import { ProfessionalsBanner, StatusStrip, TopNav } from "@/components/vintage/TopNav";
 import { VintageField } from "@/components/vintage/VintageField";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -9,32 +10,36 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); 
     
     try {
-      // 1. Ambil data dari backend kamu saat login ditekan
+      // 1. Ambil data kandidat untuk verifikasi email
       const res = await fetch("http://localhost:3001/api/candidates");
       if (res.ok) {
         const candidates = await res.json();
         
-        // 2. Cari user atas nama Muhammad Abimanyu Riza
-        const myUser = candidates.find((c: any) => c.full_name === "Muhammad Abimanyu Riza");
+        // 2. Cari user berdasarkan email yang dimasukkan
+        const user = candidates.find((c: any) => c.email?.toLowerCase() === email.toLowerCase());
 
-        if (myUser) {
-          // 3. Simpan data LENGKAP dengan ID ke Local Storage
+        if (user) {
+          // 3. Simpan data ID user ke Local Storage agar profil yang ditarik nanti benar
           localStorage.setItem("talentz_user", JSON.stringify({
-            id: myUser.id, // INI YANG PALING PENTING AGAR BISA SAVE!
-            fullName: myUser.full_name,
-            initials: "MR"
+            id: user.id,
+            fullName: user.full_name,
+            email: user.email
           }));
           
-          // Redirect ke profil
+          // 4. Redirect ke profil dengan parameter 'me'
           navigate({ to: "/candidate/$id", params: { id: "me" } });
         } else {
-          alert("User 'Muhammad Abimanyu Riza' tidak ditemukan di database!");
+          alert("Email tidak ditemukan. Pastikan Anda sudah terdaftar!");
         }
+      } else {
+        alert("Gagal menghubungi server. Pastikan backend berjalan.");
       }
     } catch (err) {
       console.error("Gagal koneksi ke backend:", err);
@@ -70,8 +75,20 @@ function LoginPage() {
               </p>
 
               <form onSubmit={handleLogin} className="space-y-5 max-w-md mx-auto">
-                <VintageField label="Email" type="email" placeholder="Enter your email" />
-                <VintageField label="Password" type="password" placeholder="Enter your password" />
+                <VintageField 
+                    label="Email" 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <VintageField 
+                    label="Password" 
+                    type="password" 
+                    placeholder="Enter your password" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
                 <div className="flex items-center justify-between font-typewriter text-sm text-ink">
                   <label className="flex items-center gap-2">
