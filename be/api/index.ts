@@ -1,20 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-// --- ALAT PELACAK .ENV ---
-console.log("Mengecek isi .env:");
-console.log("URL Supabase:", process.env.SUPABASE_URL);
-console.log("Service Key:", process.env.SUPABASE_SERVICE_KEY ? "KUNCI TERBACA ✅" : "KOSONG ❌");
-// -------------------------
+import { handle } from 'hono/vercel';
+
+// Inisialisasi Hono
 const app = new Hono();
 
 // Konfigurasi Supabase
-// Bun otomatis membaca dari file .env di folder 'be'
 const supabase = createClient(
   process.env.SUPABASE_URL!, 
   process.env.SUPABASE_SERVICE_KEY! 
 );
 
+// Middleware CORS
 app.use('/*', cors());
 
 // 1. Endpoint untuk mengambil semua kandidat
@@ -32,11 +30,17 @@ app.post('/api/register', async (c) => {
   const { data, error } = await supabase.auth.signUp({ email, password });
   if (error) return c.json({ error: error.message }, 400);
 
-  // Simpan data profil ke tabel 'profiles'
+  /* 
+     PERINGATAN: 
+     Jika kamu sudah menggunakan SQL Trigger di Supabase untuk sinkronisasi profil
+     setelah email terverifikasi (seperti yang kita bahas sebelumnya), 
+     maka blok .insert di bawah ini HARUS dihapus atau di-comment 
+     agar tidak terjadi bentrok atau data ganda.
+  */
   const { error: profileError } = await supabase.from('profiles').insert([{ 
     id: data.user?.id, 
     full_name: fullName,
-    avatar_url: avatarUrl // Menyimpan URL dari Supabase Storage
+    avatar_url: avatarUrl
   }]);
 
   if (profileError) return c.json({ error: profileError.message }, 500);
@@ -52,10 +56,5 @@ app.get('/api/candidates/:id', async (c) => {
   return c.json(data);
 });
 
-console.log("🔥 Backend berlari sangat kencang dengan Bun di port 3001!");
-
-// Format Export khusus untuk Bun
-export default {
-  port: 3001,
-  fetch: app.fetch,
-};
+// Export handler khusus untuk Vercel
+export default handle(app);
