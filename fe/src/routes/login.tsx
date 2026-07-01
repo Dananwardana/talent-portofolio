@@ -1,7 +1,9 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { PaperFrame, DoilyNote } from "@/components/vintage/PaperFrame";
-import { TopNav, StatusStrip, ProfessionalsBanner } from "@/components/vintage/TopNav";
+import { DoilyNote, PaperFrame } from "@/components/vintage/PaperFrame";
+import { ProfessionalsBanner, StatusStrip, TopNav } from "@/components/vintage/TopNav";
 import { VintageField } from "@/components/vintage/VintageField";
+import { supabase } from "@/lib/supabase"; // Import supabase
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -9,36 +11,39 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); 
+    setLoading(true);
     
     try {
-      // 1. Ambil data dari backend kamu saat login ditekan
-      const res = await fetch("http://localhost:3001/api/candidates");
-      if (res.ok) {
-        const candidates = await res.json();
-        
-        // 2. Cari user atas nama Muhammad Abimanyu Riza
-        const myUser = candidates.find((c: any) => c.full_name === "Muhammad Abimanyu Riza");
+      // 1. Menggunakan Supabase Auth untuk autentikasi yang valid
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
 
-        if (myUser) {
-          // 3. Simpan data LENGKAP dengan ID ke Local Storage
-          localStorage.setItem("talentz_user", JSON.stringify({
-            id: myUser.id, // INI YANG PALING PENTING AGAR BISA SAVE!
-            fullName: myUser.full_name,
-            initials: "MR"
-          }));
-          
-          // Redirect ke profil
-          navigate({ to: "/candidate/$id", params: { id: "me" } });
-        } else {
-          alert("User 'Muhammad Abimanyu Riza' tidak ditemukan di database!");
-        }
+      if (error) throw error;
+
+      // 2. Jika sukses, arahkan ke profil (Supabase otomatis menyimpan sesi)
+      if (data.user) {
+        // Tetap simpan ke localStorage untuk kebutuhan UI aplikasi kamu
+        localStorage.setItem("talentz_user", JSON.stringify({
+          id: data.user.id,
+          email: data.user.email
+        }));
+        
+        // 3. Redirect ke profil dengan parameter 'me'
+        navigate({ to: "/candidate/$id", params: { id: "me" } });
       }
-    } catch (err) {
-      console.error("Gagal koneksi ke backend:", err);
-      alert("Pastikan server backend (localhost:3001) sedang berjalan.");
+    } catch (err: any) {
+      console.error("Login Error:", err);
+      alert("Login gagal: " + (err.message || "Email atau password salah"));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,8 +75,20 @@ function LoginPage() {
               </p>
 
               <form onSubmit={handleLogin} className="space-y-5 max-w-md mx-auto">
-                <VintageField label="Email" type="email" placeholder="Enter your email" />
-                <VintageField label="Password" type="password" placeholder="Enter your password" />
+                <VintageField 
+                    label="Email" 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <VintageField 
+                    label="Password" 
+                    type="password" 
+                    placeholder="Enter your password" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
 
                 <div className="flex items-center justify-between font-typewriter text-sm text-ink">
                   <label className="flex items-center gap-2">
@@ -84,8 +101,8 @@ function LoginPage() {
                 </div>
 
                 <div className="pt-4 flex flex-col items-center gap-4">
-                  <button type="submit" className="pill-btn !px-10 !py-3 w-full">
-                    LOGIN
+                  <button type="submit" disabled={loading} className="pill-btn !px-10 !py-3 w-full">
+                    {loading ? "AUTHENTICATING..." : "LOGIN"}
                   </button>
                   <p className="font-typewriter text-sm text-ink">
                     Don't have an account?{" "}
