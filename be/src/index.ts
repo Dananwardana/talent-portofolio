@@ -1,14 +1,18 @@
-import { serve } from '@hono/node-server';
+import { createClient } from '@supabase/supabase-js';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { createClient } from '@supabase/supabase-js';
-
+// --- ALAT PELACAK .ENV ---
+console.log("Mengecek isi .env:");
+console.log("URL Supabase:", process.env.SUPABASE_URL);
+console.log("Service Key:", process.env.SUPABASE_SERVICE_KEY ? "KUNCI TERBACA ✅" : "KOSONG ❌");
+// -------------------------
 const app = new Hono();
 
 // Konfigurasi Supabase
+// Bun otomatis membaca dari file .env di folder 'be'
 const supabase = createClient(
   process.env.SUPABASE_URL!, 
-  process.env.SUPABASE_SERVICE_KEY! // Gunakan service key di backend untuk akses admin
+  process.env.SUPABASE_SERVICE_KEY! 
 );
 
 app.use('/*', cors());
@@ -48,6 +52,10 @@ app.get('/api/candidates/:id', async (c) => {
   return c.json(data);
 });
 
-const port = 3001;
-serve({ fetch: app.fetch, port });
-console.log(`Backend running on port ${port}`);
+console.log("🔥 Backend berlari sangat kencang dengan Bun di port 3001!");
+
+// Format Export khusus untuk Bun
+export default {
+  port: 3001,
+  fetch: app.fetch,
+};

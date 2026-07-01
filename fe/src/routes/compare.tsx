@@ -1,8 +1,24 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+<<<<<<< HEAD
 import { useMemo, useState, useEffect } from "react";
 import { X, Plus, Check, Search } from "lucide-react";
 import { z } from "zod";
 import { TopNav } from "@/components/vintage/TopNav";
+=======
+import { Check, Plus, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { z } from "zod";
+
+// Baris komparasi ini sekarang membaca *key* dinamis hasil fetch database di bawah
+const COMPARE_ROWS = [
+  { label: "Role", key: "role" },
+  { label: "Location", key: "location" },
+  { label: "Total Skills", key: "skillsCount" },
+  { label: "Top Experience", key: "experienceSummary" },
+  { label: "Top Education", key: "educationSummary" },
+  { label: "About", key: "about" },
+];
+>>>>>>> d2b0c074266185d06684fbc2fb9c5f812a97289e
 
 const searchSchema = z.object({
   ids: z.string().optional(),
@@ -32,14 +48,40 @@ function ComparePage() {
   const navigate = useNavigate({ from: "/compare" });
   const [pickerOpen, setPickerOpen] = useState(false);
   
+<<<<<<< HEAD
   // Tarik data asli dari Backend
+=======
+>>>>>>> d2b0c074266185d06684fbc2fb9c5f812a97289e
   const [candidatesList, setCandidatesList] = useState<any[]>([]);
 
+  // TARIK SELURUH DATA DARI DATABASE (Real-time!)
   useEffect(() => {
+<<<<<<< HEAD
     fetch(API_URL)
       .then(res => res.json())
       .then(data => setCandidatesList(data))
       .catch(err => console.error("Gagal load data banding:", err));
+=======
+    fetch("http://localhost:3001/api/candidates")
+      .then((res) => res.json())
+      .then((data) => {
+         const mappedData = data.map((c: any) => ({
+            id: c.id,
+            name: c.full_name || "Unknown Candidate",
+            role: c.role || "-",
+            location: c.address || "-",
+            about: c.about || "-",
+            img: c.avatar_url || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
+            tags: c.tech ? c.tech.slice(0, 3).map((t: any) => t.name || t) : [],
+            // Format khusus untuk ditampilkan di tabel perbandingan:
+            skillsCount: `${(c.tech?.length || 0) + (c.soft?.length || 0)} Skills`,
+            experienceSummary: c.experience && c.experience.length > 0 ? c.experience[0].title : "No experience listed",
+            educationSummary: c.education && c.education.length > 0 ? c.education[0].title : "No education listed"
+         }));
+         setCandidatesList(mappedData);
+      })
+      .catch(err => console.error("Error fetching compare data:", err));
+>>>>>>> d2b0c074266185d06684fbc2fb9c5f812a97289e
   }, []);
 
   const selectedIds: string[] = useMemo(() => (ids ? ids.split(",").filter(Boolean) : []), [ids]);
@@ -126,7 +168,7 @@ function ComparePage() {
           )}
         </div>
 
-        {/* Slots */}
+        {/* Kolom Profil yang Terpilih */}
         <div className="mt-6 grid sm:grid-cols-2 gap-6">
           {[0, 1].map((slot) => {
             const c = selected[slot];
@@ -160,24 +202,54 @@ function ComparePage() {
                     <h3 className="font-typewriter text-maroon font-bold tracking-wide text-lg truncate">
                       {c.full_name}
                     </h3>
+<<<<<<< HEAD
                     <p className="font-sans font-medium text-slate-700 text-sm mt-1">{c.role || "No Role"}</p>
                     <p className="font-typewriter text-ink/50 text-xs mt-1">{c.address || "No Location"}</p>
                   </div>
                 </div>
+=======
+                    <p className="font-typewriter text-ink/70 text-sm">{c.role}</p>
+                    <p className="font-typewriter text-ink/60 text-xs mt-1">{c.location}</p>
+                  </div>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {c.tags.map((t: string, i: number) => (
+                    <span
+                      key={i}
+                      className="px-2.5 py-1 rounded-full bg-maroon/10 text-maroon text-xs border border-maroon/30"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+>>>>>>> d2b0c074266185d06684fbc2fb9c5f812a97289e
               </div>
             );
           })}
         </div>
 
-        {/* Comparison table */}
+        {/* Tabel Komparasi */}
         {canCompare ? (
           <div className="mt-10 overflow-hidden rounded-xl border-2 border-maroon shadow-xl">
             <table className="w-full bg-white">
               <thead>
+<<<<<<< HEAD
                 <tr className="bg-maroon text-paper border-b-2 border-maroon">
                   <th className="px-6 py-4 text-left font-typewriter tracking-widest text-sm w-1/4">CATEGORY</th>
                   <th className="px-6 py-4 text-left font-typewriter tracking-widest text-sm w-[37.5%] border-l border-maroon-deep/30">{selected[0].full_name}</th>
                   <th className="px-6 py-4 text-left font-typewriter tracking-widest text-sm w-[37.5%] border-l border-maroon-deep/30">{selected[1].full_name}</th>
+=======
+                <tr className="bg-paper-dark">
+                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest">
+                    Category
+                  </th>
+                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest w-2/5">
+                    {selected[0].name}
+                  </th>
+                  <th className="px-6 py-4 text-left font-typewriter text-maroon tracking-widest w-2/5">
+                    {selected[1].name}
+                  </th>
+>>>>>>> d2b0c074266185d06684fbc2fb9c5f812a97289e
                 </tr>
               </thead>
               <tbody>
@@ -205,7 +277,7 @@ function ComparePage() {
         )}
       </main>
 
-      {/* Picker modal */}
+      {/* Modal / Popup Pilih Kandidat */}
       {pickerOpen && (
         <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6 animate-in fade-in duration-200">
           <div className="bg-paper border-2 border-maroon rounded-xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden animate-in zoom-in-95" onClick={(e) => e.stopPropagation()}>
@@ -213,8 +285,15 @@ function ComparePage() {
               <h2 className="font-typewriter text-lg tracking-widest font-bold">SELECT DOSSIER</h2>
               <button onClick={() => setPickerOpen(false)} className="hover:text-red-300 transition-colors"><X className="h-5 w-5" /></button>
             </div>
+<<<<<<< HEAD
             
             <div className="p-6 overflow-y-auto space-y-3 bg-slate-50">
+=======
+            <div className="overflow-y-auto -mx-2 px-2 space-y-2">
+              {candidatesList.length === 0 && (
+                 <div className="text-center py-4 font-typewriter text-ink/60">No candidates available</div>
+              )}
+>>>>>>> d2b0c074266185d06684fbc2fb9c5f812a97289e
               {candidatesList.map((c) => {
                 const already = selectedIds.includes(c.id);
                 return (
