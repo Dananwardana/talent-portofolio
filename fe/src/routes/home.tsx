@@ -88,6 +88,12 @@ function HomePage() {
             </div>
         </div>
 
+        <div className="mb-8 flex justify-center">
+          <Link to="/compare" className="pill-btn !px-6 !py-2 text-sm">
+            Compare Candidates
+          </Link>
+        </div>
+
         {/* TAMPILAN ERROR JIKA TERJADI MASALAH */}
         {errorMsg && (
             <div className="mb-6 flex justify-center">
@@ -130,6 +136,13 @@ function HomePage() {
                 <div className="flex-grow"></div>
                 <div className="mt-4 flex gap-2">
                   <Link to="/candidate/$id" params={{ id: c.id || 'me' }} className="pill-btn flex-1 !py-2 text-center text-xs">View Profile</Link>
+                  <Link
+                    to="/compare"
+                    search={{ ids: String(c.id || "") }}
+                    className="pill-btn flex-1 !py-2 text-center text-xs"
+                  >
+                    Compare
+                  </Link>
                 </div>
               </div>
             ))
